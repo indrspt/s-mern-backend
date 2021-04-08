@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s-mern-backend
+  namespace: staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: s-mern-backend
+      metadata: s-mern-backend
+  template:
+    metadata:
+      labels:
+        name: s-mern-backend
+        metadata: s-mern-backend
+    spec:
+      containers:
+      - name: s-mern-backend
+        image: indraraspati/s-mern-backend:1.0
+        ports:
+        - containerPort: 4000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: s-mern-backend
+  namespace: staging
+spec:
+  #type: LoadBalancer
+  ports:
+    - port: 4000
+      #nodePort: 30080
+  selector:
+          name: s-mern-backend
+---
+
